@@ -64,7 +64,7 @@ UserSessionListView = Backbone.View.extend({
 CreateUserSessionView = Backbone.View.extend({
     el: "#create-session-form",
     initialize: function (options) {
-        _.bindAll(this, "save");
+        //_.bindAll(this, "save");
         
         this.eventAg = options.eventAg;
         this.form = $(this.el);
