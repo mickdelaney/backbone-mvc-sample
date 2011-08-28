@@ -13,7 +13,11 @@ UserSession = Backbone.Model.extend({
     },
     idAttribute: 'Id',
     url: function () {
-        return "/Accounts/usersessions";
+        if(this.isNew()) {
+            return "/Accounts/usersessions";
+        } else {
+            return "/Accounts/usersessions/" + this.get('Id');
+        }
     },
     validate: function (attrs) {
         if (attrs.Name == '') {
@@ -29,15 +33,26 @@ UserSessionCollection = Backbone.Collection.extend({
 
 UserSessionListItemView = Backbone.View.extend({
     tagName: "li",
+    className: "usersession group",
+    events: {
+        "click": "editSession"
+    },
     initialize: function (options) {
         _.bindAll(this, "render");
 
         //Pub/sub
         this.eventAg = options.eventAg;
-        
+
         //UI
         var source = $("#item-template");
         this.template = Handlebars.compile(source.html());
+    },
+    editSession: function (e) {
+        e.preventDefault();
+
+        editForm = new EditUserSessionView({ model: this.model, eventAg: this.eventAg });
+        editForm.render();
+        return false;
     },
     render: function () {
         var content = this.template(this.model.toJSON());
@@ -103,9 +118,7 @@ CreateUserSessionView = Backbone.View.extend({
         e.preventDefault();
 
         var self = this;
-        this.model.save(
-            this.model.attributes,
-            {
+        this.model.save(this.model.attributes, {
                 success: function (model, response) {
                     console.log('created session. publishing event. model:' + JSON.stringify(model));
                     self.eventAg.trigger("userSession:Created", model);
@@ -121,31 +134,39 @@ CreateUserSessionView = Backbone.View.extend({
 EditUserSessionView = Backbone.View.extend({
     el: "#edit-session-form",
     initialize: function (options) {
-        _.bindAll(this, "save", "render");
-
-        this.Session = options.session;
+        _.bindAll(this, "render");
+        
         this.eventAg = options.eventAg;
-        this.render();
     },
     //events on the el            
     events: {
+        "change input": "updateModel",
         "submit": "save"
     },
+    updateModel: function (evt) {
+        var field = $(evt.currentTarget);
+        var data = {};
+        var key = field.attr('NAME');
+        var val = field.val();
+        data[key] = val;
+        if (!this.model.set(data)) {
+            //reset the form field
+            field.val(this.model.get(key));
+        }
+    },
     render: function () {
-        $("#edit-name").val(this.Session.get('Name'));
+        $("#edit-name").val(this.model.get('Name'));
     },
     save: function (e) {
         e.preventDefault();
 
         var self = this;
-        var name = $("#edit-name").val();
-
-        this.Session.set({ Name: name });
-        this.Session.save({
-            success: function (model, response) {
-                self.eventAg.trigger("userSession:Updated", model);
+        this.model.save(this.model.attributes, {
+                success: function (model, response) {
+                    self.eventAg.trigger("userSession:Updated", model);
+                }
             }
-        });
+        );
     }
 });
 

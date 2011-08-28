@@ -1,4 +1,20 @@
-﻿body
+﻿/* Hacks */
+
+.group {		
+	zoom:1; /* For IE 6/7 (trigger hasLayout) */
+
+	&:before,
+	&:after {
+		content:"";
+		display:table;
+	}
+	&:after {
+		clear:both;
+	}	
+}
+
+
+body
 {
     font-size: 75%;
     font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
@@ -69,6 +85,10 @@ textarea
 
 /* lists */
 
+ul {
+	list-style:none;
+}
+
 ul.tabs {
 	position:relative;
 	float:left;
@@ -110,4 +130,32 @@ ul.tabs {
 			z-index:102;
 		}
 	}
+}
+
+
+/* usersessions */
+#sessions-list {
+	margin: 10px;
+	padding: 0;
+}
+.usersession { 
+	width: 300px;
+	border-top: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+}
+#actions {
+	border: 1px solid #DDD;
+	margin: 10px;
+}
+#create-session {
+	border: 1px solid #DDD;
+	float: left;
+	padding: 10px;
+	margin-right: 10px;
+}
+#edit-session {
+	border: 1px solid #DDD;
+	padding: 10px;
+	float: left;
 }
