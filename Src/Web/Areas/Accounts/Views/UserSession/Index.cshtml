@@ -1,0 +1,19 @@
+﻿@using MvcAndBackbone.Areas.Accounts.Models 
+@model IList<UserSession>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User Sessions</h2>
+@if (Model.Count == 0)
+{
+    <p>No sessions created</p>
+}
+
+<ul>@foreach (var session in Model)
+{
+    <li>@session.Name</li>    
+}
+</ul>
