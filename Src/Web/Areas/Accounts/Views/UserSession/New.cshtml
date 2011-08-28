@@ -18,7 +18,7 @@
         <h3><a href="#edit/{{Id}}">{{Name}}</a></h3>                
         <div>
             <h4>Vacancies</h4>
-            <ul>
+            <ul class="tabs">
             {{#Tags}}
                 <li>
                     <p>{{this}}</p>
@@ -35,13 +35,13 @@
 
 <h2>Create New User Session</h2>
 <form id="create-session-form" action="@Url.Action("Create", "UserSession")">
-    <input type="text" name="create-name" id="create-name"/>
+    <input type="text" name="Name" id="create-name"/>
     <input type="submit" value="Create"/>
 </form>
 
 
 <h2>Edit Session</h2>
 <form id="edit-session-form" action="@Url.Action("Update", "UserSession")">
-    <input type="text" name="edit-name" id="edit-name"/>
+    <input type="text" name="Name" id="edit-name"/>
     <input type="submit" value="Update"/>
 </form>
