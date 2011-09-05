@@ -33,9 +33,17 @@ namespace MvcAndBackbone.Areas.Accounts.Controllers
                 return Json(ModelState.Values);
             }
 
+            var session = MvcApplication.UserSession
+                                        .Where(u => u.Id == userSession.Id)
+                                        .FirstOrDefault();
+
+            session.Name = userSession.Name;
+            session.Tags.Clear();
+            session.Tags.AddRange(userSession.Tags);
+
             if (Request.IsAjaxRequest())
             {
-                return Json(userSession, JsonRequestBehavior.AllowGet);
+                return Json(session, JsonRequestBehavior.AllowGet);
             }
 
             return RedirectToAction("Index");

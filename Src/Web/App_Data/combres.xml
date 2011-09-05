@@ -16,7 +16,7 @@
                 localChangeMonitorInterval="30"
                 remoteChangeMonitorInterval="60">
     <resourceSet name="css" type="css">
-      <resource path="~/content/Site.css" />
+      <resource path="~/content/App.css" />
     </resourceSet>
     <resourceSet name="js" type="js">
       <resource path="~/scripts/jquery-1.6.2.js" />

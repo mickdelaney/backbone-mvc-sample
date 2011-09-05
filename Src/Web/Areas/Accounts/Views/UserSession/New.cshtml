@@ -15,33 +15,45 @@
 </script>
 <script id="item-template" type="text/x-handlebars-template">  
     <div>
-        <h3><a href="#edit/{{Id}}">{{Name}}</a></h3>                
+        <h3>
+            {{Name}}
+        </h3>                
         <div>
-            <h4>Vacancies</h4>
-            <ul>
-            {{#Tags}}
-                <li>
-                    <p>{{this}}</p>
-                </li>
-            {{/Tags}}
-        </ul>
+            <h4>Tags</h4>
+            <ul id="usersession" class="tabs">
+                {{#Tags}}
+                
+                    <li class="tag" data->
+                        <p>{{this}}</p>
+                    </li>
+                {{/Tags}}
+            </ul>
         </div>
     <div>
 </script>
 
+<div>
 
-<h2>Sessions</h2>
-<ul id="sessions-list"></ul>
+    <h2>Sessions</h2>
+    
+    <div id="actions" class="group">
+        <div id="create-session">
+            <h2>Create New User Session</h2>
+            <form id="create-session-form" action="@Url.Action("Create", "UserSession")">
+                <input type="text" name="Name" id="create-name"/>
+                <input type="submit" value="Create"/>
+            </form>
+        </div>
 
-<h2>Create New User Session</h2>
-<form id="create-session-form" action="@Url.Action("Create", "UserSession")">
-    <input type="text" name="create-name" id="create-name"/>
-    <input type="submit" value="Create"/>
-</form>
+        <div id="edit-session">
+            <h2>Edit Session</h2>
+            <form id="edit-session-form" action="@Url.Action("Update", "UserSession")">
+                <input type="text" name="Name" id="edit-name"/>
+                <input type="submit" value="Update"/>
+            </form>
+        </div>
+    </div>
 
-
-<h2>Edit Session</h2>
-<form id="edit-session-form" action="@Url.Action("Update", "UserSession")">
-    <input type="text" name="edit-name" id="edit-name"/>
-    <input type="submit" value="Update"/>
-</form>
+    <ul id="sessions-list"></ul>
+   
+</div>
