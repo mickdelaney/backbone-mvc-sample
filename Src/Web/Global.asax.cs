@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Core;
 using MvcAndBackbone.Areas.Accounts.Models;
 using MvcAndBackbone.Controllers;
+using MvcAndBackbone.Core;
 using RestfulRouting;
 using RestfulRouting.Mappers;
 using StructureMap;
@@ -28,25 +30,18 @@ namespace MvcAndBackbone
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             RouteTable.Routes.MapRoutes<DefaultRoutes>();
-
-            //routes.MapRoute(
-            //    "Default", // Route name
-            //    "{controller}/{action}/{id}", // URL with parameters
-            //    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            //);
         }
 
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
 
-            //ViewEngines.Engines.Clear();
-            //ViewEngines.Engines.Add(new RestfulRoutingRazorViewEngine());
-
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             ConfigureContainer();
+
+            DependencyResolver.SetResolver(new StructureMapDependencyResolver(Container));
         }
 
         public void ConfigureContainer()
@@ -55,6 +50,7 @@ namespace MvcAndBackbone
             Container.Configure(x => x.Scan(scan => {
                 scan.TheCallingAssembly();
                 scan.WithDefaultConventions();
+                scan.LookForRegistries();
             }));
         }
     }

@@ -27,6 +27,11 @@ namespace MvcAndBackbone.Areas.Accounts
 
         public override void Map(IMapper map)
         {
+            //map.Path("employers/{employerSlug}")
+            //{
+                
+
+            //}
             map.Area<UserSessionController>(AreaName, m => m.Resources<UserSessionController>());
         }
     }

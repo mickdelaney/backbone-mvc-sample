@@ -1,0 +1,28 @@
+﻿@using Dashboard.Models
+@model LogMessagesViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Log Messages</h2>
+
+@if (Model.Messages.Count > 0)
+{
+<ul id="log-messages">
+    @foreach (var message in Model.Messages)
+    {
+        <li>
+            <div class="message">
+                <div class="header">ArrivedAt: @message.ArrivedAt</div>
+                <div class="body">Message: @message.Message</div>
+            </div>
+        </li>
+    }
+</ul>
+}
+else
+{
+    <p>No messages received. </p>
+}
